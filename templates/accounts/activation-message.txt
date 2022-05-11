@@ -1,0 +1,13 @@
+Hello, {{ user|capfirst }}
+
+Thanks for registering on our website!
+
+To login on our website you need to activate your account!
+
+Please, click the link below to be able to login:
+
+ACTIVATION KEY: {{ activation_url }} 
+
+Thank You!
+
+-CFE

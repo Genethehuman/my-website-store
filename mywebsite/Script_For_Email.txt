@@ -1,0 +1,2 @@
+from django.core.mail import send_mail
+send_mail('Hello Gennady', 'This is the test message', 'mishavtrusikah@gmail.com', ['mishavtrusikah'], fail_silently=False)

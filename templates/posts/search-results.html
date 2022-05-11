@@ -1,0 +1,42 @@
+{% extends 'base.html' %} 
+
+{% block pizda %}
+    <div style="margin-bottom: 30px"> 
+        <h3> Maybe you are searching for: </h3>
+    </div>      
+    <table class="table table-boarderless bg-dark">
+        <thead>
+            <tr>
+            <th></th>
+            <th></th>
+            </tr>
+        </thead>
+    
+    <tbody>
+
+
+        {% for obj in search_list %} 
+            <tr>
+                {% if obj.image %}
+                <td>
+                    <img src="{{ obj.image.url }}" class="img-fluid border rounded-3 shadow-lg" alt="Example image" style="height: 100px ;" loading="lazy">
+                </td>
+                {% else %} 
+                <td> <img src="" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" style="height: 100px;" loading="lazy"> </td>
+                {% endif %}
+                
+                <td>
+                    <a href="{{ obj.get_absolute_url }}"><p style="font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;"> {{ obj }} </p></a>
+                </td>
+            </tr>
+                <!-- <li><a href="{{ obj.get_absolute_url }}"><p style="font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif"> {{ obj }} </p></a></li> -->
+
+
+        {% endfor %}
+
+        
+
+
+    </tbody>    
+    </table>
+{% endblock pizda %} 

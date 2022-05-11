@@ -1,0 +1,20 @@
+{% extends 'base.html' %} 
+
+{% block pizda %} 
+
+<form action="." method="POST">
+    {% csrf_token %}
+    <!-- {{ form.as_p }} -->
+    <div>
+        <input type='text' name='govnotitle' placeholder="Title">
+    </div>
+    <div>
+        <textarea name="sukatext" placeholder="Enter your text here" ></textarea>
+    </div>
+    <div>
+        <button type="submit" name="create">Create Post</button> 
+    </div>
+</form>
+
+
+{% endblock pizda %} 

@@ -1,0 +1,14 @@
+{% extends 'base.html' %} 
+
+{% block pizda %} 
+
+<form method="POST" action="">
+    {% csrf_token %}
+    <div style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">
+        <div class="pb-3"> {{ logged_in_message }} </div>
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary btn-sm"> Submit </button>
+    </div>
+    </form>
+
+{% endblock pizda %} 

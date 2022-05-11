@@ -1,0 +1,54 @@
+{% extends 'base.html'%} 
+
+{% block pizda %} 
+
+{% if empty %} 
+
+<h2> {{ empty_message }} </h2>
+{% else %} 
+<h1> CART </h1>
+
+<table class="table table-bordered" style="color:rgb(255, 255, 255)">
+  <tr>
+    <th>Items</th>
+    <th>Price</th>
+    <th>Quantity</th>
+    <th>Variations</th>
+    <th></th>
+  </tr>
+    
+
+
+
+    {% for i in objects_in_cart %} 
+
+        <tr>
+            <td> {{i.cart_item.name}} {% if i.variations.all %} : <ul> {% for v in i.variations.all %} <li>{{v.category|capfirst}}: {{v.title|capfirst}} </li> {% endfor %}  </ul> {% endif %} </td>
+            <td> {{i.cart_item.price}}  </td>
+            <td> {{i.quantity}} </td>
+            <td> {{i.variations.all}} </td>
+            <td><a href="{% url 'remove-from-cart' i.id %}"> Remove </a> </td>
+        </tr>
+
+    {% endfor %}
+
+    <tr style="border: none">
+        <td></td>
+        <td></td>
+        <td> 
+            Total: {{ cart.total }}
+           
+
+        </td>
+        <td></td>
+        <td></td>
+    </tr>
+
+</table>
+
+<br/>
+<a href="{% url 'checkout' %}">Checkout</a>
+
+{% endif %} 
+
+{% endblock pizda %} 

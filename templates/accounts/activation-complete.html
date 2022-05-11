@@ -1,0 +1,12 @@
+{% extends 'base.html' %} 
+
+{% block pizda %} 
+
+{% if this_user.confirmed %} 
+<h2> {{ msg }} <a href="{% url 'login' %}">Login</a></h2>
+<!-- <h2> Your account has been activated! Thanks for joining Gennady's Team! Would you like to <a href="{% url 'login' %}"> Login </a></h2> -->
+{% else %} 
+<h2> {{ msg }} </h2>
+{% endif %} 
+
+{% endblock pizda %} 

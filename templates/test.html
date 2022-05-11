@@ -1,0 +1,16 @@
+{% extends 'base.html' %} 
+
+{% block pizda %}
+
+<h1> This is the TEST page </h1>
+<form action="."  method="POST">
+    {% csrf_token %}
+    <div>
+        <input type='text' name='class-item-title' placeholder="Title">
+    </div>
+    <div>
+        <button type="submit" name="create-class-item">Create Cart Item</button> 
+    </div>
+</form>
+<a href='.'>NEW CART ITEM</a>
+{% endblock pizda %} 

@@ -1,0 +1,75 @@
+{% extends 'base.html' %} 
+
+{% block pizda %} 
+    <h1> {{ obj.name }} </h1>
+    <form method="POST" action="{% url 'add-to-cart' obj.slug %}">
+      {% csrf_token %}
+      <div class='btn-group py-3'>
+        <div>
+          <select name='qty'  class="form-select form-select-sm mb-3" aria-value='1' aria-setsize="20" aria-placeholder="1" aria-label=".form-select-sm example" style="width: 57px; text-align: center;">
+            <option selected value="1"> 1 </option>
+            <option  value="2"> 2 </option>
+            <option  value="3"> 3 </option>
+            <option value="4"> 4 </option>
+            <option value="5"> 5 </option>
+          </select>
+        </div>
+        <div>
+          
+          {% if obj.variation_set.all %}
+            {% if obj.variation_set.sizes %}
+  
+              <select name='size'  class="form-select form-select-sm mb-3 padding-3" aria-value='1' aria-setsize="20" aria-placeholder="1" aria-label=".form-select-sm example" style="width: 90px; text-align: center;">
+                {% for i in obj.variation_set.sizes %} 
+                  <option  value="{{i.title|lower}}"> {{i.title|capfirst}} </option>
+                {% endfor %}
+              </select>
+            {% endif %}
+
+        </div>
+        <div>
+            
+            {% if obj.variation_set.colors %} 
+              <select name='color'  class="form-select form-select-sm mb-3 padding-3" aria-value='1' aria-setsize="20" aria-placeholder="1" aria-label=".form-select-sm example" style="width: 90px; text-align: center;">
+                {% for i in obj.variation_set.colors %} 
+                  <option value="{{i.title|lower}}"> {{i.title|capfirst}} </option>
+                {% endfor %}
+              </select>
+            {% endif %}
+
+          {% endif %}
+          
+
+        </div>
+        <!-- <div>
+          <select name='color'  class="form-select form-select-sm mb-3 padding-3" aria-value='1' aria-setsize="20" aria-placeholder="1" aria-label=".form-select-sm example" style="width: 90px; text-align: center;">
+            <option selected value="grey"> Grey </option>
+            <option  value="white"> White </option>
+            <option  value="black"> Black </option>
+            <option  value="pink"> Pink </option>
+          </select>
+        </div> -->
+        <div>
+        <button type="submit" class="btn btn-primary btn-sm">Add to Cart</button>
+        </div>
+      </div>
+
+
+    </form>
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-0">
+        <div class="container px-5">
+
+          {% if obj.image %} 
+            <div>
+              <img src="{{ obj.image.url }}" class="img-fluid border rounded-3 shadow-lg mb-4" alt="Example image" style="height: 500px ;" loading="lazy">
+            </div>
+            <!-- <div class="btn-group">
+                       
+                <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+            </div> -->
+          {% endif %}
+        </div>
+
+    </div>
+    <p> {{ obj.description }} </p>
+{% endblock pizda %}
