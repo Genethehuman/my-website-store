@@ -8,12 +8,11 @@ from marketing.models import MarketingMessage
 
 def store_main_view(request):
     all_categories = Category.objects.all()
-    # marketing_message = MarketingMessage.objects.all()[0]
-    #marketing_message = request.session['marketing_message']
     print('MARKETING MESSAGE FROM SESSION:', request.session['marketing_message'])
     context={
         'all_categories': all_categories,
-        # 'marketing_message': marketing_message,
+        'sliders': True,
+        
     }
     return render(request, 'store/main.html', context=context)
 

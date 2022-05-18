@@ -23,6 +23,11 @@ from posts.views import (
     search_view,
 )
 
+from marketing.views import (
+    dismiss_marketing_message,
+    # ajax_email_signup,
+)
+
 from cart.views import (
     cart_view,
     add_to_cart_view,
@@ -65,6 +70,8 @@ urlpatterns = [
     path('store/cart/', cart_view, name='cart'),
     path('checkout/', checkout_view, name='checkout'),
     path('orders/', orders_view, name='orders'),
+    path('ajax/dismiss-marketing-message', dismiss_marketing_message, name='dismiss-marketing-message'),
+    # path('ajax/ajax-email-signup', ajax_email_signup, name='ajax-email-signup'),
     path('store/cart/<int:id>/', remove_from_cart_view, name='remove-from-cart'),
     path('store/cart/<slug:hueta>/', add_to_cart_view, name='add-to-cart'),
     path('store/<slug:vagina>/', category_view, name='category'),

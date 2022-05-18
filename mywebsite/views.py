@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import request, response
 from django.template import context
 from django.utils.text import slugify
+from marketing.models import MarketingMessage, Slider
 
 from posts.models import Post
 from store.models import Item, Category
@@ -11,10 +12,13 @@ def capital_word_view(request):
     return render(request, 'capital-word.html', context=context)
 
 def home_view(request):
+    sliders = Slider.objects.all_featured()
     object_list = Post.objects.all()
     print(object_list)
     context={
-        'object_list': object_list
+        'object_list': object_list,
+        'sliders': sliders,
+
     }
     return render(request, 'home.html', context=context)
 
