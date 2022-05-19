@@ -28,14 +28,20 @@ def dismiss_marketing_message(request):
 
 
 def email_signup(request):
-
-    form = EmailForm(request.POST)
-    if form.is_valid():
-        # print(form.cleaned_data['email'])
-        email = form.cleaned_data['email']
-        return HttpResponse('Success' + email)
-    else:
-        raise Http404
+    if request.method == "POST":
+        print('REQUEST POST:', request.POST)
+        form = EmailForm(request.POST)
+        if form.is_valid():
+            # print(form.cleaned_data['email'])
+            email = form.cleaned_data['email']
+            return HttpResponse('Success ' + email)
+        if form.errors:
+            # print('FORM ERRORS:', form.errors)
+            # json_data = json.dumps(form.errors)
+            # print('JSON VS FREDDY:', json_data)
+            return JsonResponse (form.errors)  #это так по-новому надо делать! Без dumps и HttpResponse
+        else:
+            raise Http404
 
 
 

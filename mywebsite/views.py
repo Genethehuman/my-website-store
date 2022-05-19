@@ -14,16 +14,13 @@ def capital_word_view(request):
 def home_view(request):
     sliders = Slider.objects.all_featured()
     object_list = Post.objects.all()
-    print(object_list)
     form = EmailForm(request.POST or None)
-    if form.is_valid():
-        print('FORM CLEANED DATA:', form.cleaned_data['email'])
     context={
         'object_list': object_list,
         'sliders': sliders,
         'form': form,
-
     }
+    # print('FORM CLEANED DATA:', form.cleaned_data['email'])
     return render(request, 'home.html', context=context)
 
 def cart_item_create(request):
