@@ -3,7 +3,7 @@ from django.http import request, response
 from django.template import context
 from django.utils.text import slugify
 from marketing.models import MarketingMessage, Slider
-
+from marketing.forms import EmailForm
 from posts.models import Post
 from store.models import Item, Category
 
@@ -15,9 +15,13 @@ def home_view(request):
     sliders = Slider.objects.all_featured()
     object_list = Post.objects.all()
     print(object_list)
+    form = EmailForm(request.POST or None)
+    if form.is_valid():
+        print('FORM CLEANED DATA:', form.cleaned_data['email'])
     context={
         'object_list': object_list,
         'sliders': sliders,
+        'form': form,
 
     }
     return render(request, 'home.html', context=context)

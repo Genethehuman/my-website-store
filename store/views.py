@@ -3,6 +3,7 @@ from .models import Category, Item
 from cart.models import Cart
 from django.utils.text import slugify
 from marketing.models import MarketingMessage
+from marketing.forms import EmailForm
 # Create your views here.
 
 
