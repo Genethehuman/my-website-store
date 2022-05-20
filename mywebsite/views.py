@@ -14,11 +14,9 @@ def capital_word_view(request):
 def home_view(request):
     sliders = Slider.objects.all_featured()
     object_list = Post.objects.all()
-    form = EmailForm(request.POST or None)
     context={
         'object_list': object_list,
         'sliders': sliders,
-        'form': form,
     }
     # print('FORM CLEANED DATA:', form.cleaned_data['email'])
     return render(request, 'home.html', context=context)

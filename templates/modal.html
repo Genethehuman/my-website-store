@@ -1,5 +1,5 @@
 <div class="modal" style="color: black;" tabindex="-1" id='marketingModal'>
-    <form method="POST" action="{% url 'ajax-email-signup' %}"> {% csrf_token %}
+    <form method="POST" action="{% url 'ajax-email-signup' %}" id=sendForm> {% csrf_token %}
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -11,7 +11,7 @@
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" id='sendMarketingForm' class="btn btn-primary">Let's Go!</button>
+                <button type="submit" class="btn btn-primary" id='sendMarketingForm'>Let's Go!</button>
                 </div>
             </div>
         </div>

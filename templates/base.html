@@ -33,7 +33,7 @@
     <style>
 
       .modal-dialog {
-        margin-top: 10%;
+        margin-top: 15%;
       }
 
       .btn-close {
@@ -234,9 +234,9 @@
 
       $("#sendMarketingForm").click(function(e){
 
-        e.preventDefault()
+        e.preventDefault() 
         var mForm = $("#sendForm").serialize()
-        console.log(mForm)
+        
 
         $.ajax({
             type: "POST",
