@@ -225,29 +225,39 @@
 
       });
 
+      {% if not request.user.is_authenticated and not request.session.email_added %}
+
       function showModal(){
         $("#marketingModal").modal("show");
         
       }
       
-      setTimeout(showModal, 10);
+      setTimeout(showModal, 5000);
 
       $("#sendMarketingForm").click(function(e){
 
         e.preventDefault() 
         var mForm = $("#sendForm").serialize()
         
-
+        
         $.ajax({
             type: "POST",
-            url: "{#% url '' %#}",
+            url: "{% url 'ajax-email-signup' %}",
             data: mForm,
             success: function(data){
-               console.log("worked!")
-              // console.log(data)
+              console.log("worked!")
+              console.log(data)
+              $("#modalError").html("<message>" + data + "</message>")
+              $("#marketingModal").modal("hide");
             },
-            error: function(){
-              console.log("error!")
+            error: function(data){
+              //console.log(data)
+              //console.log(data.responseJSON)
+              var obj = data.responseJSON
+              console.log(obj)
+              console.log(obj.email)
+              $("#modalError").html("<message style='color: red' >" + obj.email + "</message>")
+
 
             }, 
           
@@ -255,7 +265,7 @@
 
 
         });
-
+        {% endif %}
 
       
 

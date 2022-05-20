@@ -1,3 +1,4 @@
+import imp
 from django.http import Http404, JsonResponse
 from django.shortcuts import render, HttpResponse
 import json
@@ -5,6 +6,8 @@ from django.utils import timezone
 import datetime
 from django.conf import settings
 from .forms import EmailForm
+from django.http import HttpResponseBadRequest
+from django.contrib import sessions
 
 
 # def email_signup(request):
@@ -34,12 +37,15 @@ def email_signup(request):
         if form.is_valid():
             # print(form.cleaned_data['email'])
             email = form.cleaned_data['email']
+            request.session['email_added'] = True
             return HttpResponse('Success ' + email)
         if form.errors:
             # print('FORM ERRORS:', form.errors)
-            # json_data = json.dumps(form.errors)
+            json_data = json.dumps(form.errors) # В НАШИХ ПОСТУПКАХ Я ВИЖУ СЛЕДЫ НАШИХ ПРЕДКОВ
+                                                    # НАШИ МЫСЛИ - ОТРАЖЕНИЕ ВРЕМЕНИ
             # print('JSON VS FREDDY:', json_data)
-            return JsonResponse (form.errors)  #это так по-новому надо делать! Без dumps и HttpResponse
+            # return JsonResponse (form.errors)  #это так по-новому надо делать! Без dumps и HttpResponse
+            return HttpResponseBadRequest(json_data, content_type='application/json')
         else:
             raise Http404
 
