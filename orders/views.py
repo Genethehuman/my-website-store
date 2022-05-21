@@ -8,6 +8,8 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 from cart.models import Cart
 from .utils import id_generator
+from accounts.forms import UserAddressForm
+from accounts.models import UserAddress
 
 
 def orders_view(request):
@@ -32,25 +34,45 @@ def checkout_view(request):
     except Order.DoesNotExist:
         new_order = Order()
         new_order.cart = cart
-        new_order.user = request.User
+        new_order.user = request.user
+        new_order.sub_total = cart.total
+        new_order.final_price = float(new_order.sub_total) + float(new_order.tax_total)
         new_order.order_id = id_generator()
         new_order.save()
+    except:
+        return redirect('cart')
+
+
+    address_form = UserAddressForm(request.POST or None)
+    print('Address Form:', address_form)
+    if address_form.is_valid:
+        new_address = address_form.save(commit=False)
+        new_address.user = request.user
+        new_address.save()
+        print('New_Address:', new_address)
+
+
+    #1 add shipping address
+    #2 add billing address
+    #3 add and run credit card
 
     
         
 
-    new_order, created = Order.objects.get_or_create(cart=cart)
-    if created:
-        new_order.order_id = id_generator() #str(time.time()) 
-        new_order.save()
-    new_order.user = request.user
-    new_order.save()
-    print('OUR USER:', new_order.user)
-    #run credit card
+    # new_order, created = Order.objects.get_or_create(cart=cart)
+    # if created:
+    #     new_order.order_id = id_generator() #str(time.time()) 
+    #     new_order.save()
+    # new_order.user = request.user
+    # new_order.save()
+    # print('OUR USER:', new_order.user)
+    # #run credit card
     if new_order.status == 'Finished':
         #cart.delete()
         del request.session['cart_id']
         del request.session['cart_items_count']
         return redirect(reverse('cart'))
-    context = {}
+    context = {
+        'address_form': address_form,
+    }
     return render(request, 'orders/checkout.html', context=context)

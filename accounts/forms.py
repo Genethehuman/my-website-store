@@ -4,6 +4,26 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+from .models import UserAddress
+
+class UserAddressForm(forms.ModelForm):
+    class Meta:
+        model = UserAddress
+        fields = ['address', 'address2', 'city', 
+        'state', 'country', 'zipcode', 'phone', 'billing'
+        ]
+    
+    
+    
+    
+    
+    
+    
+    
+     
+    
+    
+
 class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput())

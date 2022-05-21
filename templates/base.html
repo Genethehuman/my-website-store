@@ -225,7 +225,7 @@
 
       });
 
-      {% if not request.user.is_authenticated and not request.session.email_added %}
+      {% if not request.user.is_authenticated and not request.session.email_added and not "accounts" in request.get_full_path  %}
 
       function showModal(){
         $("#marketingModal").modal("show");

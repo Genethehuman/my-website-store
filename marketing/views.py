@@ -8,6 +8,7 @@ from django.conf import settings
 from .forms import EmailForm
 from django.http import HttpResponseBadRequest
 from django.contrib import sessions
+from accounts.models import EmailMarketingSignUp
 
 
 # def email_signup(request):
@@ -37,6 +38,7 @@ def email_signup(request):
         if form.is_valid():
             # print(form.cleaned_data['email'])
             email = form.cleaned_data['email']
+            new_signup = EmailMarketingSignUp.objects.create(email=email)
             request.session['email_added'] = True
             return HttpResponse('Success ' + email)
         if form.errors:
