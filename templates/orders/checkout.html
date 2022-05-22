@@ -5,10 +5,11 @@
     <h1> Address Information </h1>
 </div>
 <div mt-10>
-    <form method="POST" action=""> {% csrf_token %}
+    <h1> {{ message }}</h1>
+    <form method="POST" action="{% url 'ajax-add-user-address' %}?next=checkout"> {% csrf_token %}
         {{ address_form.as_p }} 
 
-    <input type='submit' class='btn btn-default' value='Add Address' />
+    <input type='submit' class='btn btn-primary' value='Add Address' />
     </form>
 </div>
 

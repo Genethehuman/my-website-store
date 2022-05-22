@@ -42,14 +42,24 @@ def checkout_view(request):
     except:
         return redirect('cart')
 
+    try:
+        address_added = request.GET.get('address-added')
+        print('HUESOS:', address_added)
+        
+    except:
+        address_added = None
+        print('No Address Added Yet')
+    
+    if address_added == None:
+        address_form = UserAddressForm(request.POST or None)
+        print('Request Post:', request.POST)
+        print('Address Form:', address_form['phone'])
+    else:
+        address_form = None
 
-    address_form = UserAddressForm(request.POST or None)
-    print('Address Form:', address_form)
-    if address_form.is_valid:
-        new_address = address_form.save(commit=False)
-        new_address.user = request.user
-        new_address.save()
-        print('New_Address:', new_address)
+    current_addresses = UserAddress.objects.filter(user=request.user)
+    print('MY ADDRESSES:', current_addresses)
+        
 
 
     #1 add shipping address

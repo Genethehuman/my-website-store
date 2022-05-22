@@ -1,12 +1,14 @@
 import re
+import string
 from django.contrib import messages
 from cmath import log
 import this
+from django.http import Http404
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.template import context
 from django.urls import reverse
 from django.contrib.auth import login, logout, authenticate, get_user_model
-
+from  .forms import UserAddressForm
 from accounts.models import EmailConfirmed
 from .forms import LoginForm, RegistrationForm
 
@@ -108,5 +110,20 @@ def activation_view(request, activation_key):
 
 
 
-
+def add_user_address(request):
+    try:
+        next_page = request.GET.get("next")
+        print('GET REQUEST', request.GET)
+    except:
+        next_page = None
+    if request.method == "POST":
+        form = UserAddressForm(request.POST)
+        if form.is_valid:
+            new_address = form.save(commit=False) #что это за залупа такая и что мы вообще здесь присваиваем, пустую форму? Нихуя же не понятно!
+            new_address.user = request.user
+            new_address.save()
+            if next_page is not None:
+                return HttpResponseRedirect(reverse(str(next_page)) + "?address-added=True")
+    else:
+        raise Http404
 

@@ -45,6 +45,7 @@ from orders.views import (
 )
 from accounts.views import (
     activation_view,
+    add_user_address,
     logout_view,
     login_view,
     registration_view,
@@ -79,7 +80,8 @@ urlpatterns = [
     path('accounts/logout/', logout_view, name='logout'),
     path('accounts/login/', login_view, name='login'),
     path('accounts/register/', registration_view, name='register'),
-    path('accounts/activate/<str:activation_key>/', activation_view, name='activation')
+    path('accounts/activate/<str:activation_key>/', activation_view, name='activation'),
+    path('ajax/add-user-address/', add_user_address, name='ajax-add-user-address'),
 
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 
