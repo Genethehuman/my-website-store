@@ -13,6 +13,17 @@ from mywebsite.settings import SITE_URL
 
 # Create your models here.
 
+class UserDefaultAddress(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    shipping = models.ForeignKey("UserAddress", null=True, blank=True, related_name='user_shipping_default', on_delete=models.CASCADE)
+    billing = models.ForeignKey("UserAddress", null=True, blank=True, related_name='user_billing_default', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.user.username)
+
+class UserAddressManager(models.Manager):
+    def get_billing_address(self, user):
+        return super(UserAddressManager, self).filter(billing=True).filter(user=user)
 
 
 class UserAddress(models.Model):
@@ -30,7 +41,14 @@ class UserAddress(models.Model):
     updated = models.DateTimeField(auto_now_add=False, auto_now=True, null=True, blank=True)
 
     def __str__(self):
-        return str(self.user)
+        return str(self.id)
+
+    def get_address(self):
+        return "%s, %s, %s, %s, %s" %(self.address, self.city, self.state, self.country, self.zipcode)
+
+    class Meta:
+        ordering = ['-updated', '-timestamp']
+
 
 class UserStripe(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from cart.models import Cart
 from .utils import id_generator
 from accounts.forms import UserAddressForm
-from accounts.models import UserAddress
+from accounts.models import UserAddress, UserAddressManager
 
 
 def orders_view(request):
@@ -44,21 +44,21 @@ def checkout_view(request):
 
     try:
         address_added = request.GET.get('address-added')
-        print('HUESOS:', address_added)
+
         
     except:
         address_added = None
-        print('No Address Added Yet')
     
     if address_added == None:
         address_form = UserAddressForm(request.POST or None)
-        print('Request Post:', request.POST)
-        print('Address Form:', address_form['phone'])
     else:
         address_form = None
 
     current_addresses = UserAddress.objects.filter(user=request.user)
-    print('MY ADDRESSES:', current_addresses)
+    current_billing_addresses = UserAddress.objects.filter(user=request.user, billing=True)
+    print('REQUEST.USER:', request.user)
+    #current_billing_addresses = UserAddress.objects.get_billing_address(user=request.user)
+    
         
 
 
@@ -84,5 +84,7 @@ def checkout_view(request):
         return redirect(reverse('cart'))
     context = {
         'address_form': address_form,
+        'current_addresses': current_addresses,
+        'current_billing_addresses': current_billing_addresses,
     }
     return render(request, 'orders/checkout.html', context=context)

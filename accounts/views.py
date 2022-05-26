@@ -11,6 +11,7 @@ from django.contrib.auth import login, logout, authenticate, get_user_model
 from  .forms import UserAddressForm
 from accounts.models import EmailConfirmed
 from .forms import LoginForm, RegistrationForm
+from .models import UserDefaultAddress
 
 # Create your views here.
 
@@ -122,6 +123,12 @@ def add_user_address(request):
             new_address = form.save(commit=False) #что это за залупа такая и что мы вообще здесь присваиваем, пустую форму? Нихуя же не понятно!
             new_address.user = request.user
             new_address.save()
+            is_default = form.cleaned_data["default"]
+            print('IS_DEFAULT:', is_default)
+            if is_default:
+                default_address, created = UserDefaultAddress.objects.get_or_create(user=request.user)
+                default_address.shipping = new_address
+                default_address.save()
             if next_page is not None:
                 return HttpResponseRedirect(reverse(str(next_page)) + "?address-added=True")
     else:
