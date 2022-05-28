@@ -1,4 +1,42 @@
 {% extends 'base.html' %} 
+<script>
+{% block jquery %} 
+    Stripe.setPublishableKey('{{ stripe_pub }}');
+    
+    jQuery(function($) {
+        $('#payment-form').submit(function(event) {
+        var $form = $(this);
+
+        $form.find('button').prop('disabled', true);
+
+        Stripe.card.createToken($form, stripeResponseHandler);
+
+        return false;
+
+        });
+    });
+
+function stripeResponseHandler(status, response) {
+    var $form = $('#payment-form');
+
+    if (response.error) {
+        $form.find('.payment-errors').text(response.error.message);
+        $form.find('button').prop('disabled', false);
+    } else {
+        var token = response.id;
+        $form.append($('<input type="hidden" name="stripeToken" />')).val(token);
+        $form.get(0).submit();
+    }
+};
+
+
+
+{% endblock %}
+</script>
+
+
+
+
 
 {% block pizda %} 
 
@@ -6,10 +44,21 @@
     <h1> Address Information </h1>
 </div>
 
+
+<div class='container mt-0'>
+    <h1> {{ message }}</h1>
+    <form method="POST" action="{% url 'ajax-add-user-address' %}?next=checkout"> {% csrf_token %}
+        {{ address_form.as_p}} 
+
+    <input type='submit' class='btn btn-primary' value='Add Address' />
+    </form>
+</div>
+</form>
+
 {{ request.user.userdefaultaddress.shipping }}
 {% if current_addresses %} 
 
-<form method="POST" action=""> {% csrf_token %} 
+<form method="POST" action="" id="payment-form" > {% csrf_token %} 
 <div class='container col-sm-6' style="align-content: center; width: 250px"> 
     <p> Your saved address </p>
     <select name='shipping_address'  class="form-select form-select-sm mb-3 padding-3 aria-placeholder='Pizda'" aria-value='1' aria-setsize="10" aria-placeholder="1" >
@@ -41,20 +90,11 @@
 </br>
 {% endif %}
 
-<div class='container mt-0'>
-    <h1> {{ message }}</h1>
-    <form method="POST" action="{% url 'ajax-add-user-address' %}?next=checkout"> {% csrf_token %}
-        {{ address_form.as_p}} 
-
-    <input type='submit' class='btn btn-primary' value='Add Address' />
-    </form>
-</div>
-</form>
 
 
-  <body>
-    <!-- Display a payment form -->
-<form action="" method="POST" id='payment-form'>
+
+
+
     <span class="payment-errors"></span>
 
     <div class="form-row">
@@ -79,7 +119,9 @@
         <span> / </span>
         <input type="text" size="4" data-stripe="exp-year" />
     </div>
-</form>
+
+    <button type="submit">Submit Payment</button>
+
 
 {% endblock pizda %}
  

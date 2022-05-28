@@ -1,16 +1,21 @@
+from cmath import e
 import time
 from django.template import context
 from django.urls import reverse
 from django.shortcuts import render, redirect
 from.models import Order
 from django.contrib.auth.decorators import login_required
-
+from django.conf import settings
 # Create your views here.
 from cart.models import Cart
 from .utils import id_generator
 from accounts.forms import UserAddressForm
 from accounts.models import UserAddress, UserAddressManager
 
+try:
+    stripe_pub = settings.STRIPE_PUBLISHABLE_KEY
+except Exception as e: 
+    raise NotImplementedError(str(e))
 
 def orders_view(request):
 
@@ -59,7 +64,8 @@ def checkout_view(request):
     print('REQUEST.USER:', request.user)
     #current_billing_addresses = UserAddress.objects.get_billing_address(user=request.user)
     
-        
+    if request.method == "POST":
+        print(request.POST['stripeToken'])   
 
 
     #1 add shipping address
@@ -86,5 +92,6 @@ def checkout_view(request):
         'address_form': address_form,
         'current_addresses': current_addresses,
         'current_billing_addresses': current_billing_addresses,
+        'stripe_pub': stripe_pub, 
     }
     return render(request, 'orders/checkout.html', context=context)
