@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from tkinter import CASCADE
 from django.db import models
+from accounts.models import UserAddress
 from cart.models import Cart
 
 # Create your models here.
@@ -21,8 +22,11 @@ class Order(models.Model):
     final_price = models.DecimalField(default=0.00, max_digits=1000, decimal_places=2)
     order_id = models.CharField(max_length=120, default='ABC', unique=True)
     status = models.CharField(max_length=120, choices=STATUS_CHOICES, default='started')
+    user_shipping = models.ForeignKey(UserAddress, null=True, on_delete=models.CASCADE)
+    user_biling = models.CharField(max_length=350, null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+    
 
     def __str__(self):
         return self.order_id
