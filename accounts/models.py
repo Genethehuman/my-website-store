@@ -41,7 +41,7 @@ class UserAddress(models.Model):
     updated = models.DateTimeField(auto_now_add=False, auto_now=True, null=True, blank=True)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.get_address())
 
     def get_address(self):
         return "%s, %s, %s, %s, %s" %(self.address, self.city, self.state, self.country, self.zipcode)

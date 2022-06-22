@@ -129,6 +129,7 @@ USE_TZ = True
 
 MARKETING_DISMISS_OFFSET = 'seconds=5'
 
+DEFAULT_TAX_RATE = 0.08
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/

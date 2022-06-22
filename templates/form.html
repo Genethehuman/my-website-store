@@ -2,7 +2,8 @@
 
 
 {% block pizda %} 
-
+<div class="container container-small col-sm-6">
+<h1> {{ form_title}} </h1>
 <form method="POST" action="">
 {% csrf_token %}
 <div style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">
@@ -11,7 +12,7 @@
     <button type="submit" class="btn btn-primary btn-sm"> {{ btn }} </button>
 </div>
 </form>
-
+</div>
 
 
 

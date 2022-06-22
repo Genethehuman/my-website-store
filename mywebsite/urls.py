@@ -42,6 +42,10 @@ from store.views import (
 from orders.views import (
     checkout_view,
     orders_view,
+    payment_page_view,
+    checkout_final_view,
+    payment_successful_view,
+    payment_failed_view,
 )
 from accounts.views import (
     activation_view,
@@ -81,7 +85,14 @@ urlpatterns = [
     path('accounts/login/', login_view, name='login'),
     path('accounts/register/', registration_view, name='register'),
     path('accounts/activate/<str:activation_key>/', activation_view, name='activation'),
+    path('accounts/address/add', add_user_address, name='add_user_address'),
     path('ajax/add-user-address/', add_user_address, name='ajax-add-user-address'),
+    
+    path('checkout/payment-successful', payment_successful_view, name='payment-successful'),
+    path('checkout/payment-failed', payment_failed_view.as_view(), name='payment-failed'),
+
+    path('checkout/pre-payment/', payment_page_view, name='payment-page'),
+    path('checkout/final-payment/<id>/', checkout_final_view, name='checkout-final-page'),
 
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 

@@ -69,6 +69,7 @@ def remove_from_cart_view(request, id):
 def add_to_cart_view(request, hueta):
     request.session.set_expiry(12000)
 
+
     try:
         the_id = request.session['cart_id']
     except:

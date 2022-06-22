@@ -117,8 +117,9 @@ def add_user_address(request):
         print('GET REQUEST', request.GET)
     except:
         next_page = None
+    form = UserAddressForm(request.POST)
     if request.method == "POST":
-        form = UserAddressForm(request.POST)
+        
         if form.is_valid:
             new_address = form.save(commit=False) #что это за залупа такая и что мы вообще здесь присваиваем, пустую форму? Нихуя же не понятно!
             new_address.user = request.user
@@ -131,6 +132,14 @@ def add_user_address(request):
                 default_address.save()
             if next_page is not None:
                 return HttpResponseRedirect(reverse(str(next_page)) + "?address-added=True")
-    else:
-        raise Http404
-
+    #else:
+    #    raise Http404   так было раньше, когда эта штука не грузила отдельную страницу
+    btn = 'Add'
+    form_title = 'Add new address'
+    context={
+        'form': form,
+        'btn': btn,
+        'form_title': form_title,
+    }
+    return render(request, 'form.html', context=context)
+    

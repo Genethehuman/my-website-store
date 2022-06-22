@@ -10,3 +10,5 @@ def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
         id_generator()
     except Order.DoesNotExist:
         return the_id
+
+        

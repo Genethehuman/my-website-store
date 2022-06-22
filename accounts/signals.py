@@ -7,7 +7,7 @@ from django.db.models.signals import post_save
 
 from django.contrib.auth import get_user_model
 
-User = get_user_model()
+#User = get_user_model()
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -80,7 +80,8 @@ def user_created(sender, instance, created, *args, **kwargs): #Какого хе
         # 
 
 
-post_save.connect(user_created, sender=User)
+post_save.connect(user_created, sender=settings.AUTH_USER_MODEL)
+
 
 
 
