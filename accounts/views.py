@@ -131,7 +131,10 @@ def add_user_address(request):
                 default_address.shipping = new_address
                 default_address.save()
             if next_page is not None:
-                return HttpResponseRedirect(reverse(str(next_page)) + "?address-added=True")
+                
+                return HttpResponseRedirect(reverse(str(next_page))) # эта штука давала нам возможность добавить только один новый адрес. Из-за вот этого хвостика вконце
+
+                #return HttpResponseRedirect(reverse(str(next_page)) + "?address-added=True") # эта штука давала нам возможность добавить только один новый адрес. Из-за вот этого хвостика вконце
     #else:
     #    raise Http404   так было раньше, когда эта штука не грузила отдельную страницу
     btn = 'Add'

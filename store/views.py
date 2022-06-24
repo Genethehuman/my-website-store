@@ -20,10 +20,18 @@ def store_main_view(request):
 def category_view(request, vagina):
     print('ARGUMENTS:', vagina)
     all_items = Item.objects.all()
-    items_in_category = []
-    for i in all_items:
-        if slugify(i.category) == vagina:
-            items_in_category.append(i)
+    category = Category.objects.get(slug=vagina)
+    items_in_category = category.item_set.all()
+    # items_in_category = []
+    # for i in all_items:
+    #     print('CATEGORY:', i.category, vagina)
+        
+    #     if slugify(i.category) == vagina:
+    #         items_in_category.append(i)
+
+
+
+    print('Items In Category:', items_in_category)
     context={
         'all_items': all_items,
         'items_in_category': items_in_category,

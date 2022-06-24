@@ -22,13 +22,13 @@
                 <img src="" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
             {% endif %}
             <div class="card-body">
-              <a href="{{ i.get_absolute_url }}"><p class="card-text" style="color: black; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">{{i.name}}</p></a>
+              <a href="{{ i.get_absolute_url  }}"><p class="card-text" style="color: black; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">{{i.name}}</p></a>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                     
                         <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
                     <form action="/store/items/{{ i.slug }}">
-                        <button type="button" class="btn btn-sm btn-outline-secondary"> Product Details </button>
+                        <button type="submit" class="btn btn-sm btn-outline-secondary"> Product Details </button>
                     </form>
                 </div>
               </div>
